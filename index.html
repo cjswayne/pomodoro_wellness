@@ -1,74 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pomodoro Wellness</title>
-    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css" />
     <link rel="stylesheet" href="assets/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;900&display=swap" rel="stylesheet">
 </head>
+
 <body class="flex flex-column">
-<header class="pa4 flex flex-row justify-between">
-    <h1>Pomodoro Wellness</h1>
-    <section id="radio-section" class="uncollapsed flex flex-row items-center">
-        <select name="radio-genre" id="genre-select" class="radio-genre pa1">
-            <option value="">--Please choose an option--</option>
-        </select>
+    <header class="pa4 flex flex-row justify-between">
+        <h1>Pomodoro Wellness</h1>
+        <section id="radio-section" class="uncollapsed flex flex-row items-center">
+            <select name="radio-genre" id="genre-select" class="radio-genre pa1">
+                <!-- <option value="">--Please choose an option--</option> -->
+                <option value="option1">Jazz</option>
+            </select>
 
-        <!-- <h3 id="radio-desc" class="pa1">Jazz</h3> -->
-        <input type="checkbox" id="radio-toggle" name="radio-toggle" class="pa1">
-        <label for="radio-toggle" class="pa1">On/off</label>
-        <input type="range" id="volume" min="0" max="15" class="pa1" />
-        <label for="volume" class="pa1">Volume</label>
-        <button id="shuffle" class="pa1">Shuffle</button>
-        <button id="previous" class="pa1"><</button>
-        <button id="next" class="pa1">></button>
+            <!-- <h3 id="radio-desc" class="pa1">Jazz</h3> -->
+            <input type="checkbox" id="radio-toggle" name="radio-toggle" class="pa1">
+            <label for="radio-toggle" class="pa1">On/off</label>
+            <input type="range" id="volume" min="0" max="15" class="pa1" />
+            <label for="volume" class="pa1">Volume</label>
+            <button id="shuffle" class="pa1">Shuffle</button>
+            <button id="previous" class="pa1"></button>
+            <button id="next" class="pa1"></button>
 
-    </section>
-</header>
+        </section>
+    </header>
 
-<main class="ph4 flex flex-row">
-    <section id="queue" class="queue-section">
-        <div>
-            
-        </div>
-        <div id="queue-box">
 
-        </div>
-    </section>
-    <section id="timer-section" class=''>
-        <h3>Task Name</h3>
-        <h2>25:00</h2>
-        <button id="start">Start</button>
-        <button id="stop">Stop</button>
-    </section>
-    <section id="modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <button id="closeButton" class="close-button">x</button>
-            <h1>Break Start!</h1>
-            <h4>With these 5 minutes try this stretching exercise to increase productivity and wellness</h4>
-            <p id="modalAPI"></p>
-            <div id="timer" class="timer"></div>
-        </div>
-    </section>
-</main>
-<footer>
-    <p>Rutgers 2024 class project</p>
-    <p>Find us on GitHub<p>
-    <ul>
-        <li><a href="https://github.com/cjswayne">cjswayne</a></li>
-        <li><a href="https://github.com/Wintino5">Wintino5</a></li>
-        <li><a href="https://github.com/raymondii">raymondii</a></li>
+    <main class="ph4 flex flex-row">
+        <section id="queue" class="queue-section">
+            <div>
 
-    </ul>
-  </footer>
+            </div>
+            <div id="queue-box">
 
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-  <script src="assets/script.js"></script>
-  <script src="assets/modal.js"></script>
-  <script src="assets/radio.js"></script>
-  </body>
-  </html>
+            </div>
+        </section>
+        <section id="timer-section" class="text-center">
+            <h3>Task Name</h3>
+            <h2>25:00</h2>
+            <button id="start">Start</button>
+            <button id="stop">Stop</button>
+        </section>
+        <section id="modal" class="modal hide">
+            <div class="modal-content">
+                <button id="closeButton" class="close-button">x</button>
+                <h1>Break Start!</h1>
+                <h4>With these 5 minutes try this stretching exercise to increase productivity and wellness</h4>
+                <p id="modalAPI"></p>
+                <div id="timer" class="timer"></div>
+            </div>
+        </section>
+    </main>
+    <footer class="text-center">
+        <p>Rutgers 2024 class project</p>
+        <p>Find us on GitHub</p>
+        <ul>
+            <li><a href="https://github.com/cjswayne">cjswayne</a></li>
+            <li><a href="https://github.com/Wintino5">Wintino5</a></li>
+            <li><a href="https://github.com/raymondii">raymondii</a></li>
+        </ul>
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="assets/script.js"></script>
+    <script src="assets/modal.js"></script>
+    <script src="assets/radio.js"></script>
+</body>
+
+</html>
