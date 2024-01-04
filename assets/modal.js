@@ -1,28 +1,35 @@
-$(document).ready(function () {
-  // Get a reference to the close button element
-  const closeButton = $("#closeButton");
+$(document).ready(function() {
+  const modal = $('#modal');
+  const closeButton = $('#closeButton');
+  const modalAPI = $('#modalAPI');
 
-  // Get a reference to the modal element
-  const modal = $("#modal");
+  const settings = {
+    async: true,
+    crossDomain: true,
+    url: 'https://exercises-by-api-ninjas.p.rapidapi.com/v1/exercises?type=stretching&difficulty=beginner',
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '2aade0df73msh092561d66cc6328p124b29jsn58062a61a115',
+      'X-RapidAPI-Host': 'exercises-by-api-ninjas.p.rapidapi.com'
+    }
+  };
 
-  // Function to close the modal
+  function displayModal() {
+    modal.show();
+  }
+
   function closeModal() {
     modal.hide();
   }
 
-  // Add click event listener to the close button
-  closeButton.on("click", closeModal);
+  closeButton.on('click', closeModal);
 
-  // Set a timeout to show the modal after 25 minutes
-  setTimeout(showModal, 25 * 60 * 1000); // 25 minutes in milliseconds
-
-  // Function to show the modal
-  function showModal() {
-    modal.show();
-  }
-
-  // Add click event listener to the close button inside the modal
-  closeButton.on("click", function () {
-    modal.hide();
+  $.ajax(settings).done(function(response) {
+    const exercises = response;
+    const randomIndex = Math.floor(Math.random() * exercises.length);
+    const randomExercise = exercises[randomIndex];
+    const instructions = randomExercise.instructions;
+    modalAPI.text(instructions);
+    displayModal();
   });
 });
