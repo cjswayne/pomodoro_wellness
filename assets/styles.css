@@ -1,0 +1,29 @@
+*{
+ font-family: 'Roboto', sans-serif;;
+}
+
+
+html, body{
+height:100%;
+}
+
+main{
+    flex:1;
+    padding:0 3%;
+}
+
+.timer {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+  }
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px;
+    background-color: #ccc;
+    border: none;
+    cursor: pointer;
+}
