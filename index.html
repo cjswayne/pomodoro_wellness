@@ -6,9 +6,58 @@
     <title>Pomodoro Wellness</title>
     <link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"/>
     <link rel="stylesheet" href="assets/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;900&display=swap" rel="stylesheet">
 </head>
-<body>
-    
-    <script src="assets/script.js"></script>
-</body>
-</html>
+<body class="flex flex-column">
+<header class="pa4 flex flex-row justify-between">
+    <h1>Pomodoro Wellness</h1>
+
+    <section id="radio-section" class="uncollapsed flex flex-row items-center">
+        <h3 id="radio-desc">Jazz</h3>
+        <input type="checkbox" id="radio-toggle" name="radio-toggle">
+        <label for="radio-toggle">On/off</label>
+        <input type="range" id="volume" min="0" max="15" />
+        <label for="volume">Volume</label>
+        <button id="shuffle">Shuffle</button>
+    </section>
+</header>
+
+<main class="ph4 flex flex-row">
+    <section id="queue" class="queue-section">
+        <div>
+            
+        </div>
+        <div id="queue-box">
+
+        </div>
+    </section>
+    <section id="timer-section" class=''>
+        <h3>Task Name</h3>
+        <h2>25:00</h2>
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
+    </section>
+    <section id="modal" class="modal">
+        <div class="modal-content">
+            <button id="closeButton" class="close-button">x</button>
+            <h1>Break Start!</h1>
+            <h4>With these 5 minutes try this stretching exercise to increase productivity and wellness</h4>
+            <p id="modalAPI"></p>
+            <div id="timer" class="timer"></div>
+        </div>
+    </section>
+</main>
+<footer>
+    <p>Rutgers 2024 class project</p>
+    <p>Find us on GitHub<p>
+    <ul>
+        <li><a href="https://github.com/cjswayne"></a></li>
+        <li><a href="https://github.com/Wintino5"></a></li>
+        <li><a href="https://github.com/raymondii"></a></li>
+    </ul>
+  </footer>
+
+  </body>
+  </html>
