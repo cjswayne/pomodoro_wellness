@@ -45,8 +45,45 @@ next station/previous station
 
 // fxn select genre
 
+// fxn to populate genre options
+function fillGenreOptions(){
+    var genres = [
+        "jazz", 
+        "lofi",
+        "music for study",
+        "hip hop",
+        "classical",
+        "ambient and relaxation music",
+        "relax",
+        "focus radio"
+        ]
+
+    var $select = $('#genre-select')
+
+    $.each(genres, function(index, value){
+        $select.append($('<option></option>').val(value).html(titleize(value)));
+    });
+}
+
+// fxn to titleize a string
+function titleize(str){
+    return str.replace(/\w\S*/g, function(txt){
+        const lowerCaseWords = ['a', 'an', 'the', 'and', 'but', 'or', 'for', 'nor', 'on', 'in', 'at', 'to', 'from', 'by'];
+        return lowerCaseWords.includes(txt.toLowerCase()) && txt !== str[0]
+            ? txt.toLowerCase()
+            : txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    })
+}
+
+// fxn to initiate radio
+function init(){
+    fillGenreOptions()
+}
+
 
 $(document).ready(function() {
+
+    init();
     $('#genre-select').change(function(){
         var selectedGenre = $(this).val();
         console.log(selectedGenre);
