@@ -8,6 +8,7 @@ height:100%;
 }
 
 main{
+    position: relative;
     flex:1;
     padding:0 3%;
 }
@@ -32,3 +33,14 @@ main{
     cursor: pointer;
 }
 
+.modal {
+    position: absolute;
+    background: grey;
+    height: 400px;
+    width: 600px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin: auto;
+}
