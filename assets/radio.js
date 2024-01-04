@@ -23,13 +23,16 @@ function stationGenreSelect(genre){
         url: 'https://de1.api.radio-browser.info/json/stations/bytag/' + genre,
         method: 'GET',
         success: function(data) {
+            console.log(data);
+            let randomStation = data[randomNumber(data.length)]
+            console.log(randomStation);
             if(!audio.paused){
                 audio.pause();
                 audio.currentTime = 0;
             }
 
             if(data.length > 0){
-                let url = data[0].url;
+                let url = randomStation.url;
                 audio.src = url;
                 audio.play();
             }
@@ -42,12 +45,11 @@ function stationGenreSelect(genre){
 // fxn to populate genre options
 function fillGenreOptions(){
     var genres = [
+        "music for study",
         "jazz", 
         "lofi",
-        "music for study",
         "hip hop",
         "classical",
-        "ambient and relaxation music",
         "relax",
         "focus radio"
         ]
@@ -74,6 +76,15 @@ function init(){
     fillGenreOptions()
 }
 
+//fxn to give random number 0 - max
+function randomNumber(max){
+return Math.floor(Math.random()* (max + 1))
+}
+
+//fxn to take or add class of element
+function toggleElClass(className, el){
+    $(el).hasClass(className) ? $(el).removeClass(className) : $(el).addClass(className);
+}
 
 $(document).ready(function() {
 
@@ -84,5 +95,9 @@ $(document).ready(function() {
         console.log(selectedGenre);
 
     });
+    console.log($('#toggle-collapse'));
+    $('#toggle-collapse').click(function(){
+        toggleElClass('dn', '#genre-select');
+    })
 
 });

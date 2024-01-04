@@ -79,3 +79,31 @@ header {
 footer {
     position: relative;
 }
+#radio-toggle{
+border:none;
+border-radius:10px;
+}
+
+#radio-section{
+    background-color: #42B78A;
+    border-radius: 5px;
+    height:fit-content;
+}
+
+.radio-genre{
+    appearance: none;  /* Remove default style */
+    background-color: none;
+    border: 0px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-image: url('arrow-down-icon.svg'); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    font-size: 1rem;
+}
+
+.custom-select:focus {
+    outline: none;
+    border-color: #a0a0a0;
+    box-shadow: 0 0 3px #a0a0a0;
+}

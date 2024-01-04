@@ -13,22 +13,28 @@
 </head>
 
 <body class="flex flex-column">
-    <header class="pa4 flex flex-row justify-between">
+    <header class="pa4 flex flex-row justify-between items-center">
         <h1>Pomodoro Wellness</h1>
         <section id="radio-section" class="uncollapsed flex flex-row items-center">
-            <select name="radio-genre" id="genre-select" class="radio-genre pa1">
-                <!-- <option value="">--Please choose an option--</option> -->
-                <option value="option1">Jazz</option>
+            <button id="toggle-collapse">V</button>
+            <select name="radio-genre" id="genre-select" class="radio-genre pa1 ma1 dn">
+                <option value="">Select Genre</option>
+                <!-- <option value="option1">Jazz</option> -->
             </select>
 
             <!-- <h3 id="radio-desc" class="pa1">Jazz</h3> -->
-            <input type="checkbox" id="radio-toggle" name="radio-toggle" class="pa1">
-            <label for="radio-toggle" class="pa1">On/off</label>
-            <input type="range" id="volume" min="0" max="15" class="pa1" />
-            <label for="volume" class="pa1">Volume</label>
-            <button id="shuffle" class="pa1">Shuffle</button>
-            <button id="previous" class="pa1"></button>
-            <button id="next" class="pa1"></button>
+            <!-- <input type="checkbox"  name="radio-toggle" > -->
+            
+            <!-- <label for="radio-toggle" class="pa1"></label> -->
+
+            <button id="radio-toggle" class="ma1 pa1 dib">Off</button>
+            <!-- <input type="range" id="volume" min="0" max="15" class="ma1 pa1" /> -->
+            <!-- <label for="volume" class="ma1 pa1">Volume</label> -->
+            <p id="station-name"></p>
+            <button id="previous" class="ma1 pa1"><</button>
+            <button id="next" class="ma1 pa1">></button>
+            <button id="shuffle" class="ma1 pa1">Shuffle</button>
+
 
         </section>
     </header>
