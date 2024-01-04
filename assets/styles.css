@@ -12,6 +12,10 @@ main{
     padding:0 3%;
 }
 
+.hide {
+    display: none;
+}
+
 .timer {
     position: absolute;
     top: 7px;
@@ -27,3 +31,4 @@ main{
     border: none;
     cursor: pointer;
 }
+
