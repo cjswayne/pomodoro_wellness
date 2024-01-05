@@ -11,6 +11,15 @@ next station/previous station
 var audio = new Audio();
 var stationNumber;
 var radioPlaying = false;
+var genres = [
+    "music for study",
+    "jazz", 
+    "lofi",
+    "hip hop",
+    "classical",
+    "relax",
+    "focus radio"
+    ]
 // var tag = 'jazz';
 
 // // Make a GET request to the Radio Browser API
@@ -23,15 +32,7 @@ var radioPlaying = false;
 
 // fxn to populate genre options
 function fillGenreOptions(){
-    var genres = [
-        "music for study",
-        "jazz", 
-        "lofi",
-        "hip hop",
-        "classical",
-        "relax",
-        "focus radio"
-        ]
+
 
     var $select = $('#genre-select')
 
@@ -84,22 +85,37 @@ function getStationDataByTag(tag){
         url: 'https://de1.api.radio-browser.info/json/stations/bytag/' + tag,
         method: 'GET',
         success: function(data) {
+            
             stationNumber = 0;
             // let station = data[stationNumber]
 
             playStation(data);
+
             $('#previous').click(function(){
                 previousStation(data);
             })
             $('#next').click(function(){
                 nextStation(data);
             })
+            $('#shuffle').click(function(){
+                stationNumber = randomNumber(data.length);
+                playStation(data);
+            })
         },
         error: function(error) {
             console.error('Error fetching stations:', error);
+            
         }
     });
 }
+
+// fxn to pick random station and genre
+function pickRandom(){
+    let randomGenre = genres[randomNumber(genres.length)];
+    getStationDataByTag(randomGenre);
+    console.log('shuffle ' + randomGenre);
+}
+
 
 // fxn to go to next station
 function nextStation(stations){
@@ -158,11 +174,9 @@ function playNewStation(station, stations) {
         stationNumber++;
         playStation(stations);
     });
-    // audio.onpause = function() {
-    //     radioPlaying = false;
-    //     console.log("paused");
-    // };
 }
+
+// fxn to play random station 
 
 $(document).ready(function() {
 
@@ -182,6 +196,9 @@ $(document).ready(function() {
     $('#radio-toggle').click(function(){
         toggleAudio();
     });
+    $('#shuffle').click(function(){
+        pickRandom();
+    })
 
 
 });
