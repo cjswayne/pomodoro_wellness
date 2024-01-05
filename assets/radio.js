@@ -6,8 +6,11 @@ shuffle button
 next station/previous station
 */
 
-var audio = new Audio();
+// STOPPING POINT: Continue to debug radio, then add more fxnality
 
+var audio = new Audio();
+var stationNumber;
+var radioPlaying = false;
 // var tag = 'jazz';
 
 // // Make a GET request to the Radio Browser API
@@ -17,37 +20,15 @@ var audio = new Audio();
 
 // fxn to start/stop radio
 
-// fxn select genre
-function stationGenreSelect(genre){
-    $.ajax({
-        url: 'https://de1.api.radio-browser.info/json/stations/bytag/' + genre,
-        method: 'GET',
-        success: function(data) {
-            if(!audio.paused){
-                audio.pause();
-                audio.currentTime = 0;
-            }
 
-            if(data.length > 0){
-                let url = data[0].url;
-                audio.src = url;
-                audio.play();
-            }
-        },
-        error: function(error) {
-            console.error('Error fetching stations:', error);
-        }
-    });
-}
 // fxn to populate genre options
 function fillGenreOptions(){
     var genres = [
+        "music for study",
         "jazz", 
         "lofi",
-        "music for study",
         "hip hop",
         "classical",
-        "ambient and relaxation music",
         "relax",
         "focus radio"
         ]
@@ -74,15 +55,133 @@ function init(){
     fillGenreOptions()
 }
 
+//fxn to give random number 0 - max
+function randomNumber(max){
+return Math.floor(Math.random()* (max + 1))
+}
+
+//fxn to take or add class of element
+function toggleElClass(className, el){
+    $(el).hasClass(className) ? $(el).removeClass(className) : $(el).addClass(className);
+}
+
+// fxn to start and stop radio from playing 
+function toggleAudio(){
+    if(!audio.paused){
+        console.log('paused');
+        audio.pause();
+        // audio.currentTime = 0;
+    } else {
+        console.log('unpaused');
+        audio.play();
+    }
+
+}
+
+// fxn get stations by tag 
+function getStationDataByTag(tag){
+    $.ajax({
+        url: 'https://de1.api.radio-browser.info/json/stations/bytag/' + tag,
+        method: 'GET',
+        success: function(data) {
+            stationNumber = 0;
+            // let station = data[stationNumber]
+
+            playStation(data);
+            $('#previous').click(function(){
+                previousStation(data);
+            })
+            $('#next').click(function(){
+                nextStation(data);
+            })
+        },
+        error: function(error) {
+            console.error('Error fetching stations:', error);
+        }
+    });
+}
+
+// fxn to go to next station
+function nextStation(stations){
+
+    stationNumber++;
+    console.log(stationNumber);
+    playStation(stations);
+}
+
+// fxn to go to previous station
+function previousStation(stations){
+    stationNumber--;
+    console.log(stationNumber);
+
+    playStation(stations);
+}
+
+// fxn to play station
+function playStation(stations){
+    console.log(stations);
+    let station = stations[stationNumber];
+    console.log(station);
+    // console.log(station);
+    // toggleAudio()
+
+    if(station){
+        if(radioPlaying){
+            audio.onpause = function() {
+                audio.onpause = null;
+
+                playNewStation(station, stations);
+
+                radioPlaying = false;
+                console.log('new station playing now');
+                
+            };
+
+            audio.pause();
+            audio.currentTime = 0;
+        } else {
+            playNewStation(station, stations);
+        }
+
+    }
+
+}
+
+// fxn to play new station 
+function playNewStation(station, stations) {
+    audio.src = station.url;
+    audio.play().then(() =>{
+        radioPlaying = true;
+    }).catch(e => {
+        console.error('Error playing the audio:', e);
+        radioPlaying = false;
+        stationNumber++;
+        playStation(stations);
+    });
+    // audio.onpause = function() {
+    //     radioPlaying = false;
+    //     console.log("paused");
+    // };
+}
 
 $(document).ready(function() {
 
     init();
+    stationNumber = 0;
     $('#genre-select').change(function(){
-        var selectedGenre = $(this).val();
-        stationGenreSelect(selectedGenre);
-        console.log(selectedGenre);
+        var tag = $(this).val();
+        console.log(tag);
+        getStationDataByTag(tag)
+
 
     });
+    console.log($('#toggle-collapse'));
+    $('#toggle-collapse').click(function(){
+        toggleElClass('dn', '#genre-select');
+    });
+    $('#radio-toggle').click(function(){
+        toggleAudio();
+    });
+
 
 });

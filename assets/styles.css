@@ -32,12 +32,20 @@ header {
     text-align: center;
 }
 
+#task-section {
+    margin-bottom: 15px;
+}
+
+#taskInput, #addTaskButton {
+    margin-right: 10px;
+}
+
 #timer-section {
     /* position: inherit; */
     top: 7px;
     right: 7px;
     border: 2px solid rgb(36, 147, 108);
-    border-radius: 4%;
+    border-radius: 20px;
     padding: 40px;
     background: rgb(10, 101, 10);
 }
@@ -60,22 +68,77 @@ header {
     top: 10px;
     right: 10px;
     padding: 5px;
-    background-color: #ccc;
+    background-color: #ff0000;
     border: none;
     cursor: pointer;
 }
 
 .modal {
     position: absolute;
-    background: grey;
-    height: 400px;
+    border: 2px solid rgb(201, 109, 43);
+    border-radius: 20px;
+    padding: 40px;
+    background: rgb(201, 109, 11);
+    height: 500px;
     width: 600px;
     bottom: 0;
     left: 0;
     right: 0;
     top: 0;
     margin: auto;
+    /* opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; */
 }
-footer {
-    position: relative;
+
+/* .modal.active {
+    left: 50;
+    transition: left 0.3s ease-in-out;
+} */
+
+#radio-toggle{
+border:none;
+border-radius:10px;
+}
+
+#radio-section{
+    background-color: #42B78A;
+    border-radius: 5px;
+    height:fit-content;
+}
+
+.radio-genre{
+    appearance: none;  /* Remove default style */
+    background-color: none;
+    border: 0px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-image: url('arrow-down-icon.svg'); /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    font-size: 1rem;
+}
+
+.custom-select:focus {
+    outline: none;
+    border-color: #a0a0a0;
+    box-shadow: 0 0 3px #a0a0a0;
+}
+
+footer ul {
+    list-style:none;
+    padding: 0;
+}
+
+
+footer ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+footer img {
+    width: 30px;
+    height: 30px;
 }

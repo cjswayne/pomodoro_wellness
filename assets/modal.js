@@ -16,7 +16,7 @@ $(document).ready(function() {
 
   let timerInterval;
   let timerCount = 0;
-  let minutes = 25;
+  let minutes = 1;
   let seconds = 0;
   const timerElement = $('#timer-section h2');
 
@@ -30,6 +30,7 @@ $(document).ready(function() {
 
   function updateTimer() {
     seconds--;
+  
     if (seconds < 0) {
       minutes--;
       seconds = 59;
@@ -38,7 +39,7 @@ $(document).ready(function() {
     if (minutes === 0 && seconds === 0) {
       stopTimer();
       timerCount++;
-      
+  
       if (timerCount % 4 === 0) {
         minutes = 25; // Reset to 25 minutes
       } else {
@@ -65,19 +66,20 @@ $(document).ready(function() {
     modal.hide();
   }
 
-  // Start the 5-minute timer in the modal
   function startModalTimer() {
     let timeLeft = 5 * 60; // 5 minutes in seconds
-
+  
     const modalTimerInterval = setInterval(function() {
       const modalMinutes = Math.floor(timeLeft / 60);
       const modalSeconds = timeLeft % 60;
-
+  
       timer.text(`${modalMinutes}:${modalSeconds.toString().padStart(2, '0')}`); // small timer that appears in the top right of the modal
-
+  
       if (timeLeft === 0) {
         clearInterval(modalTimerInterval);
         closeModal();
+        minutes = 25; // Start a new 25-minute timer
+        seconds = 0;
         startTimer();
       } else {
         timeLeft--;
@@ -105,3 +107,40 @@ $(document).ready(function() {
     modalAPI.text(instructions);
   });
 });
+
+$('#addTaskButton').on('click', addTask);
+
+function addTask() {
+  // Retrieve the value from the input element
+  const task = document.getElementById('taskInput').value;
+
+  // Retrieve the existing tasks from localStorage or initialize an empty array
+  const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+  // Add the new task to the list
+  savedTasks.push(task);
+
+  // Save the updated list to localStorage
+  localStorage.setItem('tasks', JSON.stringify(savedTasks));
+
+  // Clear the input field
+  document.getElementById('taskInput').value = '';
+
+  // Retrieve the list of tasks from localStorage
+  const tasks = JSON.parse(localStorage.getItem('tasks'));
+
+  // Display the most recent task above the timer and under the input box
+  const mostRecentTask = tasks[tasks.length - 1];
+  document.getElementById('taskDisplay').textContent = mostRecentTask;
+
+  // Clear the localStorageData container
+  const localStorageContainer = document.getElementById('localStorageData');
+  localStorageContainer.innerHTML = '';
+
+  // Update the localStorageData container with all tasks
+  tasks.forEach((task, index) => {
+    const dataElement = document.createElement('p');
+    dataElement.textContent = `Task ${index + 1}: ${task}`;
+    localStorageContainer.appendChild(dataElement);
+  });
+}
