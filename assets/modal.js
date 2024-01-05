@@ -59,11 +59,11 @@ $(document).ready(function() {
   }
 
   function displayModal() {
-    modal.show();
+    modal.addClass('active');
   }
 
   function closeModal() {
-    modal.hide();
+    modal.removeClass('active');
   }
 
   function startModalTimer() {
