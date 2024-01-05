@@ -27,11 +27,15 @@
             
             <!-- <label for="radio-toggle" class="pa1"></label> -->
 
-            <button id="radio-toggle" class="ma1 pa1 dib">Off</button>
+            <button id="radio-toggle" class="ma1 pa1 dib">start</button>
             <!-- <input type="range" id="volume" min="0" max="15" class="ma1 pa1" /> -->
             <!-- <label for="volume" class="ma1 pa1">Volume</label> -->
-            <p id="station-name"></p>
+            <div id="marquee-container">
+                <span id="station-name">101 Rock</span>
+            </div>
+
             <button id="previous" class="ma1 pa1"><</button>
+            <p id="station-number">112</p>
             <button id="next" class="ma1 pa1">></button>
             <!-- <button id="shuffle" class="ma1 pa1">Shuffle</button> -->
 
@@ -60,6 +64,7 @@
             <button id="start">Start</button>
             <button id="stop">Stop</button>
         </section>
+
         <section id="modal" class="modal hide text-center">
             <div class="modal-content">
                 <button id="closeButton" class="close-button">x</button>

@@ -175,6 +175,7 @@ $(document).ready(function() {
 
 });
 
+
 $('#addTaskButton').on('click', addTask);
 
 function addTask() {
