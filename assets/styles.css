@@ -37,7 +37,7 @@ header {
     top: 7px;
     right: 7px;
     border: 2px solid rgb(36, 147, 108);
-    border-radius: 4%;
+    border-radius: 20px;
     padding: 40px;
     background: rgb(10, 101, 10);
 }
@@ -76,6 +76,17 @@ header {
     top: 0;
     margin: auto;
 }
-footer {
-    position: relative;
+footer ul {
+    list-style:none;
+    padding: 0;
+}
+
+footer ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+footer img {
+    width: 30px;
+    height: 30px;
 }
