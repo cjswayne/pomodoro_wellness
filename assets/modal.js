@@ -16,7 +16,7 @@ $(document).ready(function () {
 
   let timerInterval;
   let timerCount = 0;
-  let minutes = 1;
+  let minutes = 25;
   let seconds = 0;
   const timerElement = $('#timer-section h2');
 

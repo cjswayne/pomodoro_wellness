@@ -32,6 +32,14 @@ header {
     text-align: center;
 }
 
+#task-section {
+    margin-bottom: 15px;
+}
+
+#taskInput, #addTaskButton {
+    margin-right: 10px;
+}
+
 #timer-section {
     /* position: inherit; */
     top: 7px;
@@ -60,7 +68,7 @@ header {
     top: 10px;
     right: 10px;
     padding: 5px;
-    background-color: #ccc;
+    background-color: #ff0000;
     border: none;
     cursor: pointer;
 }
@@ -71,14 +79,24 @@ header {
     border-radius: 20px;
     padding: 40px;
     background: rgb(201, 109, 11);
-    height: 600px;
+    height: 500px;
     width: 600px;
     bottom: 0;
     left: 0;
     right: 0;
     top: 0;
     margin: auto;
+    /* opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; */
 }
+
+/* .modal.active {
+    left: 50;
+    transition: left 0.3s ease-in-out;
+} */
 
 #radio-toggle{
 border:none;

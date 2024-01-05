@@ -40,14 +40,19 @@
     </header>
 
 
-    <main class="ph4 flex flex-row">
+    <main class="ph4 flex flex-column">
         <section id="queue" class="queue-section">
             <div>
-
+                
             </div>
             <div id="queue-box">
-
+                
             </div>
+        </section>
+        <section id="task-section">
+            <input type="text" id="taskInput" placeholder="task">
+            <button id="addTaskButton">+</button>
+            <div id="localStorageData"></div>
         </section>
         <section id="timer-section" class="text-center">
             <h3 id="taskDisplay">Task Name</h3>
@@ -55,12 +60,7 @@
             <button id="start">Start</button>
             <button id="stop">Stop</button>
         </section>
-        <section>
-            <input type="text" id="taskInput" placeholder="task">
-            <button id="addTaskButton">+</button>
-            <div id="localStorageData"></div>
-        </section>
-        <section id="modal" class="modal hide">
+        <section id="modal" class="modal hide text-center">
             <div class="modal-content">
                 <button id="closeButton" class="close-button">x</button>
                 <h1>Break Start!</h1>
