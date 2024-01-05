@@ -16,7 +16,7 @@ $(document).ready(function() {
 
   let timerInterval;
   let timerCount = 0;
-  let minutes = 25;
+  let minutes = 1;
   let seconds = 0;
   const timerElement = $('#timer-section h2');
 
@@ -108,29 +108,41 @@ $(document).ready(function() {
   });
 });
 
-// add task queue
+
 $('#addTaskButton').on('click', addTask);
 
 function addTask() {
   // Retrieve the value from the input element
   const task = document.getElementById('taskInput').value;
 
-  // Save the task to localStorage
-  localStorage.setItem('task', task);
 
-  // Retrieve the task from localStorage
-const savedTask = localStorage.getItem('task');
+  // Retrieve the existing tasks from localStorage or initialize an empty array
+  const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-// Display the task above the timer and under the input box
-document.getElementById('taskDisplay').textContent = savedTask;
+  // Add the new task to the list
+  savedTasks.push(task);
 
-const localStorageData = Object.entries(localStorage);
+  // Save the updated list to localStorage
+  localStorage.setItem('tasks', JSON.stringify(savedTasks));
 
-const localStorageContainer = document.getElementById('localStorageData');
+  // Clear the input field
+  document.getElementById('taskInput').value = '';
 
-localStorageData.forEach(([key, value]) => {
-  const dataElement = document.createElement('p');
-  dataElement.textContent = `${key}: ${value}`;
-  localStorageContainer.appendChild(dataElement);
-});
+  // Retrieve the list of tasks from localStorage
+  const tasks = JSON.parse(localStorage.getItem('tasks'));
+
+  // Display the most recent task above the timer and under the input box
+  const mostRecentTask = tasks[tasks.length - 1];
+  document.getElementById('taskDisplay').textContent = mostRecentTask;
+
+  // Clear the localStorageData container
+  const localStorageContainer = document.getElementById('localStorageData');
+  localStorageContainer.innerHTML = '';
+
+  // Update the localStorageData container with all tasks
+  tasks.forEach((task, index) => {
+    const dataElement = document.createElement('p');
+    dataElement.textContent = `Task ${index + 1}: ${task}`;
+    localStorageContainer.appendChild(dataElement);
+  });
 }
