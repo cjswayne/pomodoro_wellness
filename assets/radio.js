@@ -11,6 +11,20 @@ next station/previous station
 var audio = new Audio();
 var stationNumber;
 var radioPlaying = false;
+var retries = 0;
+var maxRetries = 3;
+var retryInterval = 100;
+var stations;
+var nextPreviousToggle;
+var genres = [
+    "music for study",
+    "jazz", 
+    "lofi",
+    "hip hop",
+    "classical",
+    "relax",
+    "focus radio"
+    ]
 // var tag = 'jazz';
 
 // // Make a GET request to the Radio Browser API
@@ -23,15 +37,7 @@ var radioPlaying = false;
 
 // fxn to populate genre options
 function fillGenreOptions(){
-    var genres = [
-        "music for study",
-        "jazz", 
-        "lofi",
-        "hip hop",
-        "classical",
-        "relax",
-        "focus radio"
-        ]
+
 
     var $select = $('#genre-select')
 
@@ -53,6 +59,7 @@ function titleize(str){
 // fxn to initiate radio
 function init(){
     fillGenreOptions()
+    // local storage stuff
 }
 
 //fxn to give random number 0 - max
@@ -70,56 +77,106 @@ function toggleAudio(){
     if(!audio.paused){
         console.log('paused');
         audio.pause();
-        // audio.currentTime = 0;
+        $('#radio-toggle').text('start');
     } else {
-        console.log('unpaused');
-        audio.play();
+        let isGenreSelected = $('#genre-select').val() ? true : false;
+        if(isGenreSelected){
+            console.log('unpaused');
+            audio.play();
+            fillRadio();
+        } else {
+            pickRandom()
+
+        }
+        $('#radio-toggle').text('stop');
     }
 
 }
 
 // fxn get stations by tag 
-function getStationDataByTag(tag){
+function getStationDataByTag(tag, random){
     $.ajax({
         url: 'https://de1.api.radio-browser.info/json/stations/bytag/' + tag,
         method: 'GET',
         success: function(data) {
-            stationNumber = 0;
+            stations = data;
+            
+            // stationNumber = 0;
             // let station = data[stationNumber]
+            if(random){
+                stationNumber = randomNumber(stations.length);
+                playStation();
+            } else {
+                playStation();
+            }
 
-            playStation(data);
+
             $('#previous').click(function(){
-                previousStation(data);
+                previousStation();
             })
             $('#next').click(function(){
-                nextStation(data);
+                nextStation();
             })
+
         },
         error: function(error) {
             console.error('Error fetching stations:', error);
+            
         }
     });
 }
 
-// fxn to go to next station
-function nextStation(stations){
+// fxn to pick random station and genre
+function pickRandom(){
+    if(radioPlaying){
+        let randomGenre = genres[randomNumber(genres.length)];
+        $('#genre-select').val(randomGenre);
+        getStationDataByTag(randomGenre, true);
+    
+        console.log('shuffle ' + randomGenre);
+    }
+}
 
+// fxn to fill in radio data
+function fillRadio(){
+    let station = stations[stationNumber];
+    if(station.name){
+        $('#station-name').text(station.name);
+        
+    } 
+    $('#station-number').text(stationNumber + 1);
+
+}
+
+// fxn to go to next station
+function nextStation(){
+    nextPreviousToggle = true;
     stationNumber++;
+    if(stationNumber > (stations.length - 1)){
+        stationNumber = 0;
+    } 
     console.log(stationNumber);
-    playStation(stations);
+    playStation();
 }
 
 // fxn to go to previous station
-function previousStation(stations){
+function previousStation(){
+    nextPreviousToggle = false;
     stationNumber--;
+    if(stationNumber < 0){
+        stationNumber = (stations.length - 1);
+    } 
+    // (stationNumber < 0 ? stationNumber = stations.length : stationNumber);
+
     console.log(stationNumber);
 
-    playStation(stations);
+    playStation();
 }
 
 // fxn to play station
-function playStation(stations){
+function playStation(){
     console.log(stations);
+    console.log(stationNumber);
     let station = stations[stationNumber];
     console.log(station);
     // console.log(station);
@@ -129,18 +186,17 @@ function playStation(stations){
         if(radioPlaying){
             audio.onpause = function() {
                 audio.onpause = null;
-
-                playNewStation(station, stations);
-
                 radioPlaying = false;
+                playNewStation();
                 console.log('new station playing now');
+                $('#radio-toggle').text('stop');
                 
             };
 
             audio.pause();
             audio.currentTime = 0;
         } else {
-            playNewStation(station, stations);
+            playNewStation();
         }
 
     }
@@ -148,27 +204,84 @@ function playStation(stations){
 }
 
 // fxn to play new station 
-function playNewStation(station, stations) {
+function playNewStation() {
+    let station = stations[stationNumber];
+
     audio.src = station.url;
+    audio.load();
+    // console.log(`playNewStation: ${stations}`);
+
+    tryAudio();
+
+
+}
+
+// fxn to attempt to play audio
+function tryAudio(){
     audio.play().then(() =>{
         radioPlaying = true;
+        fillRadio();
     }).catch(e => {
         console.error('Error playing the audio:', e);
+
         radioPlaying = false;
-        stationNumber++;
-        playStation(stations);
+        // console.log(`Try Audio: ${stations}`);
+        handlePlayback();
     });
-    // audio.onpause = function() {
-    //     radioPlaying = false;
-    //     console.log("paused");
-    // };
 }
+
+// fxn to handle playback error
+function handlePlayback(){
+    if(retries < maxRetries){
+        console.log(`Retry ${retries + 1} of ${maxRetries}`);
+        setTimeout(() => {
+            retries++;
+            playNewStation();
+        }, retryInterval);
+    } else {
+        // console.log(`HandlePlayback: ${stations}`);
+
+        // console.log(stations);
+        if(nextPreviousToggle){
+            nextStation();
+        } else {
+            previousStation();
+        }
+
+    }
+}
+
+// fxn to remove station if it isnt active
+function removeStation(stations, station){
+    var removalIndex = stations.filter(item => item === station);
+
+    if(removalIndex !== -1){
+        stations.splice(indexToRemove, 1);
+    }
+}
+
+// fxn to animate the station Name marquee
+function animateStationName(){
+    const stationName = $('#station-name');
+    const marqueeContainerWidth = $('#marquee-container').width();
+    const textWidth = stationName.width();
+    const start = marqueeContainerWidth;
+    const end = -textWidth;
+
+    stationName.css({left:start});
+    stationName.animate({left:end}, 8000, "linear", function() {
+
+        setTimeout(animateStationName(), 50); 
+    });
+}
+
 
 $(document).ready(function() {
 
     init();
-    stationNumber = 0;
+    animateStationName();
     $('#genre-select').change(function(){
+        stationNumber = 0;
         var tag = $(this).val();
         console.log(tag);
         getStationDataByTag(tag)
@@ -182,6 +295,9 @@ $(document).ready(function() {
     $('#radio-toggle').click(function(){
         toggleAudio();
     });
+    $('#shuffle').click(function(){
+        pickRandom();
+    })
 
 
 });
