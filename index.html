@@ -44,25 +44,28 @@
     </header>
 
 
-    <main class="ph4 flex flex-row">
-        <section id="queue" class="queue-section">
+    <main class="ph6 pv4 flex flex-row">
+        <!-- <section id="queue" class="queue-section">
             <div>
                 
             </div>
             <div id="queue-box">
                 
             </div>
-        </section>
-        <section id="task-section">
-            <input type="text" id="taskInput" placeholder="task">
-            <button id="addTaskButton">+</button>
-            <div id="localStorageData"></div>
+        </section> -->
+        <section id="task-section" class="flex flex-column">
+            <div id="localStorageData" class="tasks-list flex flex-column-reverse"></div>
+            <span class="flex flex-row pv1 add-task">
+                <input type="text" id="taskInput" placeholder="task">
+                <button id="addTaskButton">+</button>
+            </span>
+
         </section>
         <section id="timer-section" class="text-center">
             <h3 id="taskDisplay">Task Name</h3>
             <h2>1:00</h2>
-            <button id="start">Start</button>
-            <button id="stop">Stop</button>
+            <button id="start" class="bubble">Start</button>
+            <button id="stop" class="bubble">Stop</button>
         </section>
 
         <section id="modal" class="modal hide text-center">
@@ -71,10 +74,13 @@
                 <h1>Break Start!</h1>
                 <h4>With these 5 minutes try this stretching exercise to increase productivity and wellness</h4>
                 <p id="modalAPI"></p>
-                <div id="modal-timer" class="timer"></div>
+                <div id="modal-timer" class="timer">5:00</div>
             </div>
         </section>
+
+          
     </main>
+
     <footer class="text-center">
         <p>2024</p>
         <a href="https://github.com/">
