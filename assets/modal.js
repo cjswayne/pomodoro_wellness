@@ -175,13 +175,13 @@ $(document).ready(function() {
 
 });
 
-
 $('#addTaskButton').on('click', addTask);
 
 function addTask() {
   // Retrieve the value from the input element
   const task = document.getElementById('taskInput').value;
 
+  // Retrieve the existing tasks from localStorage or initialize an empty array
   const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
   // Add the new task to the list
@@ -211,3 +211,5 @@ function addTask() {
     localStorageContainer.appendChild(dataElement);
   });
 }
+
+// hello world!

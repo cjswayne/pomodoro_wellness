@@ -1,11 +1,14 @@
 *{
  font-family: 'Roboto', sans-serif;;
+ color: white;
 }
 
 
 html, body{
     height:100%;
-    background: rgb(36, 147, 108);
+    background-image: url(images/zen\ background.png);
+    background-size: cover;
+    /* background: rgb(36, 147, 108); */
 }
 
 main{
@@ -20,7 +23,7 @@ main{
 
 header {
     display: block;
-    background: rgb(10, 101, 10);
+    background-color: rgba(10, 101, 10, 0.8);
     width: 100%;
 }
 
@@ -44,10 +47,10 @@ header {
     /* position: inherit; */
     top: 7px;
     right: 7px;
-    border: 2px solid rgb(36, 147, 108);
+    border: 2px solid rgba(58,90,47,255);
     border-radius: 20px;
     padding: 40px;
-    background: rgb(10, 101, 10);
+    background: rgba(10, 101, 10, 0.85);
 }
 
 #timer-section h3 {
@@ -68,17 +71,17 @@ header {
     top: 10px;
     right: 10px;
     padding: 5px;
-    background-color: #ff0000;
+    background-color: white;
     border: none;
     cursor: pointer;
 }
 
 .modal {
     position: absolute;
-    border: 2px solid rgb(201, 109, 43);
+    border: 2px solid rgb(33, 143, 211);
     border-radius: 20px;
     padding: 40px;
-    background: rgb(201, 109, 11);
+    background: rgba(29, 186, 222, 0.9);
     height: 500px;
     width: 600px;
     bottom: 0;
@@ -88,15 +91,32 @@ header {
     margin: auto;
     /* opacity: 0;
     visibility: hidden;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; */
+    transform: translateY(-50%);
+    transition: opacity 0.3s ease-in-out, visibility 0s linear o.3s, transform 0.3s ease-in-out; */
 }
 
 /* .modal.active {
-    left: 50;
-    transition: left 0.3s ease-in-out;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.3s ease-in-out, visibility 0s linear, transform 0.3 ease-in-out;
 } */
+
+#modal h4 {
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+#modalAPI {
+    font-weight: bolder;
+    text-align: justify;
+}
+
+#timer {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-top: 5px;
+}
 
 #radio-toggle{
 border:none;
@@ -104,7 +124,8 @@ border-radius:10px;
 }
 
 #radio-section{
-    background-color: #42B78A;
+    background-color: rgba(32, 142, 32, 0.85);
+    /* background-color: #42B78A; */
     border-radius: 5px;
     height:fit-content;
 }
@@ -140,12 +161,23 @@ border-radius:10px;
     white-space: nowrap;
     z-index:100;
     /* background:black; */
-}   
+}
+
 footer ul {
     list-style:none;
     padding: 0;
 }
 
+footer ul li a {
+    color: rgba(58,90,47,255);
+    text-decoration: none;
+    padding-right: 10px;
+    border-right: 1px solid black;
+}
+
+/* footer ul li a:last-of-type {
+    border-right: none;
+} */
 
 footer ul li {
     display: inline;
