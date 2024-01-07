@@ -15,56 +15,30 @@
 <body class="flex flex-column">
     <header class="pa4 flex flex-row justify-between items-center">
         <h1>Pomodoro Wellness</h1>
-       
-        
         <section id="radio-section" class="uncollapsed flex flex-row items-center">
             <select name="radio-genre" id="genre-select" class="radio-genre pa1 ma1">
-                <option value="">Select Genre</option>
-                <!-- <option value="option1">Jazz</option> -->
             </select>
-            <button id="toggle-collapse">v</button>
-
-            <!-- <h3 id="radio-desc" class="pa1">Jazz</h3> -->
-            <!-- <input type="checkbox"  name="radio-toggle" > -->
-            
-            <!-- <label for="radio-toggle" class="pa1"></label> -->
-
-            <button id="radio-toggle" class="ma1 pa1 dib">start</button>
-            <!-- <input type="range" id="volume" min="0" max="15" class="ma1 pa1" /> -->
-            <!-- <label for="volume" class="ma1 pa1">Volume</label> -->
+            <button id="radio-toggle" class=" start-radio ma1 pa1 dib bubble">start</button>
             <div id="marquee-container">
-                <span id="station-name">101 Rock</span>
+                <span id="station-name"></span>
             </div>
-
-            <button id="previous" class="ma1 pa1"><</button>
-            <p id="station-number">112</p>
-            <button id="next" class="ma1 pa1">></button>
-            <!-- <button id="shuffle" class="ma1 pa1">Shuffle</button> -->
-
-
+            <button id="previous" class="ma1 pa1 bubble wipe-btn"><</button>
+                <p id="station-number"></p>
+            <button id="next" class="ma1 pa1 bubble wipe-btn">></button>
         </section>
     </header>
 
-
-    <main class="">
-        <!-- <section id="queue" class="queue-section">
-            <div>
-                
-            </div>
-            <div id="queue-box">
-                
-            </div>
-        </section> -->
+    <main>
         <div class="task-timer-wrapper ph6 pv4 flex flex-row items-end">
             <section id="task-section" class="flex flex-column">
                 <div id="localStorageData" class="tasks-list flex flex-column-reverse"></div>
                 <span class="flex flex-row pv1 add-task">
                     <p>1.</p>
                     <input type="text" id="taskInput" placeholder="Task">
-                    <button id="addTaskButton" class="bubble wipe-btn"><i class="fa fa-plus"></i>
+                    <button id="addTaskButton" class="bubble wipe-btn">
+                        +
                     </button>
                 </span>
-
             </section>
             <section id="timer-section" >
                 <div class="timer-section-wrapper text-center">
@@ -83,15 +57,9 @@
                 <p id="modalAPI"></p>
                 <div id="modal-timer" class="timer">5:00</div>
             </div>
-        </section>
-
-          
+        </section>  
     </main>
-
     <footer class="text-center">
-        <!-- <a href="https://github.com/">
-            <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Github Logo">
-        </a> -->
         <ul>
             <li class="">
                 <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -155,14 +123,9 @@
             </li>
         </ul>
                 <p>2024</p>
-
     </footer>
-
-
-
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script src="assets/script.js"></script>
-  <!-- <script src="assets/timer.js"></script> -->
   <script src="assets/modal.js"></script>
   <script src="assets/radio.js"></script>
   </body>
