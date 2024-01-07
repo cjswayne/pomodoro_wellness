@@ -6,7 +6,7 @@ The Pomodoro Wellness App is a productivity and well-being tool that integrates 
 
 ## Repository
 
-Link to deployed code:  https://github.com/cjswayne/pomodoro_wellness
+Link to deployed code: [https://cjswayne.github.io/pomodoro_wellness/](https://cjswayne.github.io/pomodoro_wellness/)
 
 ## Technologies
 
