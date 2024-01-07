@@ -57,16 +57,20 @@
             <section id="task-section" class="flex flex-column">
                 <div id="localStorageData" class="tasks-list flex flex-column-reverse"></div>
                 <span class="flex flex-row pv1 add-task">
-                    <input type="text" id="taskInput" placeholder="task">
-                    <button id="addTaskButton">+</button>
+                    <p>1.</p>
+                    <input type="text" id="taskInput" placeholder="Task">
+                    <button id="addTaskButton" class="bubble wipe-btn"><i class="fa fa-plus"></i>
+                    </button>
                 </span>
 
             </section>
-            <section id="timer-section" class="text-center">
+            <section id="timer-section" >
+                <div class="timer-section-wrapper text-center">
                 <h3 id="taskDisplay">Task Name</h3>
                 <h2>1:00</h2>
                 <button id="start" class="bubble">Start</button>
                 <button id="stop" class="bubble">Stop</button>
+            </div>
             </section>
         </div>
         <section id="modal" class="modal hide text-center">

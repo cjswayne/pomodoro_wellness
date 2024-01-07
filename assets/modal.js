@@ -84,6 +84,57 @@ function closeModal() {
   modal.hide();
 }
 
+//fxn to display tasks
+function displayTasks(){
+  const $localStorageContainer = $('#localStorageData');
+  $localStorageContainer.text('');
+  // console.log($localStorageContainer)
+
+  let placeholderIndex = -1;
+
+  $localStorageContainer.text('');
+  const tasks = JSON.parse(localStorage.getItem('tasks'));
+  if(tasks){
+    console.log('still happens')
+    tasks.forEach((task, index) => {
+      $localStorageContainer.append(`<span class="flex flex-row items-center justify-between">
+      <p>${index + 1}. ${task}</p>
+      <button id="task-item-${index}" class="del-task bubble wipe-btn">
+      <i class="fa fa-times"></i>
+      </button>
+      </span>`);
+        placeholderIndex = index;
+        });
+        $('.add-task p').text(`${placeholderIndex + 2}.`);
+
+        $('button.del-task').on('click', function(event){
+          let taskIndex = event.currentTarget.id
+          taskIndex = taskIndex.replace('task-item-', '')
+          $('.add-task p').text(`${taskIndex}.`);
+          $(this).parent('span').fadeOut('slow');
+          
+
+          setTimeout(function() {
+            deleteTask(taskIndex);
+
+        }, 1000); 
+
+
+
+
+         })
+  } else {
+    $('.add-task p').text('1.');
+
+
+  }
+  $('#taskInput').attr('placeholder', 'Task');
+
+
+}
+
+
+
 function addTask() {
   // Retrieve the value from the input element
   const task = document.getElementById('taskInput').value;
@@ -106,15 +157,22 @@ function addTask() {
   // Display the most recent task above the timer and under the input box
   const firstTask = tasks[0];
   document.getElementById('taskDisplay').textContent = firstTask;
-  
-  // Clear the localStorageData container
-  const $localStorageContainer = $('#localStorageData');
-  console.log($localStorageContainer)
-  $localStorageContainer.text('');
-  // Update the localStorageData container with all tasks
-  tasks.forEach((task, index) => {
-    $localStorageContainer.append(`<span class="flex flex-row items-center justify-between"><p>${index + 1}. ${task}</p><i class="del-task fa fa-times"></i></span>`);
-      });
+
+  displayTasks();
+}
+
+
+// fxn to delete task
+function deleteTask(index){
+  let tasks = JSON.parse(localStorage.getItem('tasks'));
+  console.log(index);
+  tasks.splice(index, 1);
+  console.log(tasks);
+
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+  console.log('')
+  displayTasks();
+
 }
 
 // Fxn to switch to next task
@@ -135,15 +193,16 @@ function switchToNextTask() {
  // Save the updated list to localStorage
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
-
+// fxn to delete task from queue
 
 
 
 $(document).ready(function() {
   $pomTimerElement.text(pomTimerText);
-
+  displayTasks();
   console.log(  $pomTimerElement);
   console.log(  $modalTimerElement)
+  // take items from local storage and populate local storage container
 
   closeButton.on('click', closeModal);
   // Start the timer when the start button is clicked
