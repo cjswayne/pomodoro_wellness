@@ -1,13 +1,3 @@
-/*
-Select genre (have list of preselected genres)
-toggle for turning radio on and off
-volume?
-shuffle button
-next station/previous station
-*/
-
-// STOPPING POINT: Continue to debug radio, then add more fxnality
-
 var audio = new Audio();
 var stationNumber;
 var radioPlaying = false;
@@ -28,14 +18,6 @@ var genres = [
 
     "relax"
     ]
-// var tag = 'jazz';
-
-// // Make a GET request to the Radio Browser API
-
-// fxn to return radio station
-// function getStation(type, tag, location, )
-
-// fxn to start/stop radio
 
 
 // fxn to populate genre options
@@ -62,7 +44,6 @@ function titleize(str){
 // fxn to initiate radio
 function init(){
     fillGenreOptions()
-    // local storage stuff
 }
 
 //fxn to give random number 0 - max
@@ -78,13 +59,13 @@ function toggleElClass(className, el){
 // fxn to start and stop radio from playing 
 function toggleAudio(){
     if(!audio.paused){
-        console.log('paused');
+        
         audio.pause();
         $('#radio-toggle').text('start');
     } else {
         let isGenreSelected = $('#genre-select').val() ? true : false;
         if(isGenreSelected){
-            console.log('unpaused');
+            
             audio.play();
             
             $('#radio-toggle').text('stop');
@@ -109,9 +90,7 @@ function getStationDataByTag(tag, random){
         method: 'GET',
         success: function(data) {
             stations = data;
-            
-            // stationNumber = 0;
-            // let station = data[stationNumber]
+
             if(random){
                 stationNumber = randomNumber(stations.length);
                 playStation();
@@ -122,19 +101,11 @@ function getStationDataByTag(tag, random){
 
             $('#previous').click(function(e){    
                 disablePrevNext()
-                // this.disabled = true;
-                // setTimeout(() => {
-                //     this.disabled = false;
-                // }, 1000); 
                 previousStation();
             })
         
             $('#next').click(function(e){
                 disablePrevNext()
-                // this.disabled = true;
-                // setTimeout(() => {
-                //     this.disabled = false;
-                // }, 1000); 
                 nextStation();
 
             })
@@ -159,6 +130,7 @@ function disablePrevNext(){
     
 
 }
+// fxn toggle previous and next btns
 
 function enablePrevNext(){
     $('#previous').prop('disabled', false);
@@ -173,7 +145,6 @@ function pickRandom(){
         $('#genre-select').val(randomGenre);
         getStationDataByTag(randomGenre, true);
     
-        console.log('shuffle ' + randomGenre);
     }
 }
 
@@ -199,7 +170,6 @@ function nextStation(){
         stationNumber = 0;
     } 
     $("#station-number").text(stationNumber);
-    console.log(stationNumber);
     playStation();
 }
 
@@ -211,9 +181,7 @@ function previousStation(){
     if(stationNumber < 0){
         stationNumber = (stations.length - 1);
     } 
-    // (stationNumber < 0 ? stationNumber = stations.length : stationNumber);
 
-    console.log(stationNumber);
 
     playStation();
 }
@@ -221,12 +189,9 @@ function previousStation(){
 // fxn to play station
 function playStation(){
     
-    console.log(stations);
-    console.log(stationNumber);
+
     let station = stations[stationNumber];
-    console.log(station);
-    // console.log(station);
-    // toggleAudio()
+
 
     if(station){
         if(radioPlaying){
@@ -235,7 +200,6 @@ function playStation(){
                 audio.onpause = null;
                 radioPlaying = false;
                 playNewStation();
-                console.log('new station playing now');
                 $('#radio-toggle').text('stop');
                 enablePrevNext()
                 
@@ -257,7 +221,7 @@ function playNewStation() {
 
     audio.src = station.url;
     audio.load();
-    // console.log(`playNewStation: ${stations}`);
+
 
     tryAudio();
 
@@ -271,30 +235,15 @@ function startAudio(){
         method: 'GET',
         success: function(data) {
             stations = data;
-            
-            // stationNumber = 0;
-            // let station = data[stationNumber]
-            // if(random){
+
                 stationNumber = randomNumber(stations.length);
-            //     playStation();
-            // } else {
-            //     playStation();
-            // }
 
 
             $('#previous').click(function(e){
-                // this.disabled = true;
-                // setTimeout(() => {
-                //     this.disabled = false;
-                // }, 1000); 
-                // console.log(e.currentTarget);
+
                 previousStation();
             })
             $('#next').click(function(e){
-                // this.disabled = true;
-                // setTimeout(() => {
-                //     this.disabled = false;
-                // }, 1000); 
 
                 nextStation();
             })
@@ -303,7 +252,6 @@ function startAudio(){
             audio.src = station.url;
             audio.load();
 
-            console.log('loaded!');
             $('#radio-toggle').prop('disabled', false);
 
 
@@ -325,7 +273,6 @@ function tryAudio(){
     }).catch(e => {
 
         radioPlaying = false;
-        // console.log(`Try Audio: ${stations}`);
         handlePlayback();
     });
 }
@@ -339,9 +286,6 @@ function handlePlayback(){
             playNewStation();
         }, retryInterval);
     } else {
-        // console.log(`HandlePlayback: ${stations}`);
-
-        // console.log(stations);
         if(nextPreviousToggle){
             nextStation();
         } else {
@@ -388,12 +332,11 @@ $(document).ready(function() {
         disablePrevNext();
         stationNumber = 0;
         var tag = $(this).val();
-        console.log(tag);
         getStationDataByTag(tag)
 
 
     });
-    console.log($('#toggle-collapse'));
+    
     $('#toggle-collapse').click(function(){
         toggleElClass('dn', '#genre-select');
     });

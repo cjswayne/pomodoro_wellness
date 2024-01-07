@@ -24,8 +24,8 @@ const modalTimer = convertTimeToMinutes(modalTimerText);
 
 const $pomTimerElement = $('#timer-section h2');
 const pomTimerText = '25:00'
-// let pomTimer = convertTimeToMinutes(pomTimerText);
-let pomTimer = 0.05;
+let pomTimer = convertTimeToMinutes(pomTimerText);
+// let pomTimer = 0.05;
 
 // fxn to start a countdown with interval in minutes, a fxn to run when the interval is done, and a fxn to run during the interval
 function countDownTimer(minutes, fxnDone = () => {}, fxnDuring){
