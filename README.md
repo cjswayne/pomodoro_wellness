@@ -23,11 +23,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 The following image shows the web application's appearance and functionality:
 
-![The Pomodoro Wellness webpage includes a pomodoro timer, a radio API function, and a modal with a exercise API.](./assets/images/)
+![The Pomodoro Wellness webpage includes a pomodoro timer, a radio API function, and a modal with a exercise API.](./assets/images/search-thing.gif)
 
-![The Pomodoro Wellness webpage includes a pomodoro timer, a radio API function, and a modal with a exercise API.](./assets/images/)
-
-![The Pomodoro Wellness webpage includes a pomodoro timer, a radio API function, and a modal with a exercise API.](./assets/images/)
 
 ## Usage
 

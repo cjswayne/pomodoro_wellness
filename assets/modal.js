@@ -1,8 +1,4 @@
-const modal = $('#modal');
-const closeButton = $('#closeButton');
 const modalAPI = $('#modalAPI');
-// const timerElement = $('#timer');
-let currentTaskIndex = 0;
 const settings = {
   async: true,
   crossDomain: true,
@@ -14,34 +10,32 @@ const settings = {
   }
 };
 
-let timerInterval;
 let timerCount = 0;
 let minutes = 1;
 let seconds = 0;
 let timer;
 
-const modalTimerText = '5:00';
-const pomTimerText = '25:00'
+const closeButton = $('#closeButton');
 
-const modalTimer = 5;
-const pomTimer = 25;
-
+const modal = $('#modal');
+const $modalTimerElement = $('#modal-timer');
+const modalTimerText = '05:00';
+const modalTimer = convertTimeToMinutes(modalTimerText);
 
 const $pomTimerElement = $('#timer-section h2');
-const $modalTimerElement = $('#modal-timer');
+const pomTimerText = '25:00'
+let pomTimer = convertTimeToMinutes(pomTimerText);
+// let pomTimer = 0.05;
 
-
-
-function countDownTimer(minutes, fxnDone, fxnDuring){
+// fxn to start a countdown with interval in minutes, a fxn to run when the interval is done, and a fxn to run during the interval
+function countDownTimer(minutes, fxnDone = () => {}, fxnDuring){
   let countDown = (minutes * 60);
-  
   timer = setInterval(function(){
     if(countDown <= 0){
+      // $("#timer-section > div > h2").addClass('flashing-text');
       clearInterval(timer);
       $("#start").css("pointer-events", "auto"); 
       fxnDone();
-      // displayModal()
-      // startModalTimer()
     } else {
       fxnDuring(countDown);
     }
@@ -50,25 +44,46 @@ function countDownTimer(minutes, fxnDone, fxnDuring){
 }
 
 // fxn to update timer element 
-function updateTimerElement(timerCount, timerElementText) {
+function updateTimerElement(timerCount, $els) {
   let modalMinutes = Math.floor(timerCount / 60);
   let modalSeconds = timerCount % 60;
+  // cpm
+  
 
-  timerElementText.text(`${modalMinutes}:${((modalSeconds < 10) ? ('0' + modalSeconds ): modalSeconds)}`);
+
+  $.each($els, function(index, el) {
+    $(el).text(`${((modalMinutes < 10) ? ('0' + modalMinutes ): modalMinutes)}:${((modalSeconds < 10) ? ('0' + modalSeconds ): modalSeconds)}`);
+});
 }
 
+//fxn to stop the timer
 function stopTimer() {
+  pomTimer = convertTimeToMinutes($pomTimerElement.text());
+
   clearInterval(timer);
   $("#start").css("pointer-events", "auto"); 
 }
 
+//fxn to convert time to minutes
+function convertTimeToMinutes(timeStr){
+  const parts = timeStr.split(':');
+  const minutes = parseInt(parts[0], 10);
+  const seconds = parseInt(parts[1], 10);
 
+  return minutes + (seconds - 1) / 60;
+}
 
+// fxn to display modal
 function displayModal() {
-  $pomTimerElement.text(pomTimerText);
+  $pomTimerElement.text(modalTimerText);
   $modalTimerElement.text(modalTimerText);
-  countDownTimer(modalTimer, closeModal, (timerCount) => updateTimerElement(timerCount, $modalTimerElement) )
-
+  $('#taskDisplay').text('Break Time!');
+  // countDownTimer needs to take list of elements to update both
+  countDownTimer(modalTimer, () => {
+    closeModal();
+    switchToNextTask();
+    }, (timerCount) => updateTimerElement(timerCount, [$modalTimerElement, $pomTimerElement]) )
+  // countDownTimer(modalTimer, , (timerCount) => updateTimerElement(timerCount, ) )
   $.ajax(settings).done(function(response) {
     const exercises = response;
     const randomIndex = Math.floor(Math.random() * exercises.length);
@@ -79,11 +94,89 @@ function displayModal() {
   modal.show();
 }
 
-function closeModal() {
-  switchToNextTask()
-  modal.hide();
+
+
+//fxn to display tasks
+function displayTasks(){
+  const $localStorageContainer = $('#localStorageData');
+  $localStorageContainer.text('');
+
+  let placeholderIndex = -1;
+  let tasksLength;
+  // $localStorageContainer.text('');
+  const tasks = JSON.parse(localStorage.getItem('tasks'));
+  if(tasks){
+
+    tasksLength = tasks.length;
+    $('.add-task p').text(`${tasksLength}.`);
+    // $('#taskDisplay').text(tasks[0]);
+    
+    tasks.forEach((task, index) => {
+      $localStorageContainer.append(`
+      <span class="flex flex-row items-center justify-between">
+        <p>${index + 1}. ${task}</p>
+        <button id="task-item-${index}" class="del-task bubble wipe-btn">
+          x
+        </button>
+      </span>`);
+        placeholderIndex = index;
+        });
+
+        $('.add-task p').text(`${placeholderIndex + 2}.`);
+
+        $('button.del-task').on('click', function(event){
+          let taskIndex = event.currentTarget.id
+          taskIndex = taskIndex.replace('task-item-', '')
+          $('.add-task p').text(`${tasksLength}.`);
+          deleteTask(taskIndex);
+          updateQueueOrder('#localStorageData span > p', taskIndex, tasksLength);
+          $(this).parent('span').fadeOut('slow');
+
+
+          setTimeout(function() {
+            displayTasks();
+          }, 1000); 
+         })
+  } else {
+    $('.add-task p').text('1.');
+  }
+  $('#taskInput').attr('placeholder', 'Task');
 }
 
+// fxn to update queue order
+function updateQueueOrder(selector, listIndex, length){
+  let tasks = JSON.parse(localStorage.getItem('tasks'));
+
+  // tasks.splice(index, 1);
+  // localStorage.setItem('tasks', JSON.stringify(tasks));
+
+  $(selector).each(function(index){
+    
+    console.log(index);
+    var buttonId = $(this).siblings('button').attr('id');
+    var text = $(this).siblings('p');
+    console.log($(this));
+
+    buttonId = buttonId.replace('task-item-', '')
+    var buttonIdNumber = parseInt(buttonId, 10);
+    console.log(tasks);
+    console.log(tasks[buttonIdNumber]);
+
+    // this.text(tasks[buttonIdNumber]);
+    console.log(buttonIdNumber);
+    if(listIndex < buttonIdNumber){
+      
+      $(this).text(`${buttonIdNumber++}. ${tasks[index-1]}`);
+    }
+    
+    // if (buttonIdNumber == 0){
+    //   $('#taskDisplay').text(tasks[index]);
+
+    // }
+  })
+}
+
+// fxn to add task
 function addTask() {
   // Retrieve the value from the input element
   const task = document.getElementById('taskInput').value;
@@ -105,89 +198,69 @@ function addTask() {
 
   // Display the most recent task above the timer and under the input box
   const firstTask = tasks[0];
-  document.getElementById('taskDisplay').textContent = firstTask;
-  
-  // Clear the localStorageData container
-  const localStorageContainer = document.getElementById('localStorageData');
-  localStorageContainer.innerHTML = '';
+  // document.getElementById('taskDisplay').textContent = firstTask;
 
-  // Update the localStorageData container with all tasks
-  tasks.forEach((task, index) => {
-    const dataElement = document.createElement('p');
-    dataElement.textContent = `Task ${index + 1}: ${task}`;
-    localStorageContainer.appendChild(dataElement);
-  });
+  displayTasks();
 }
 
-// Fxn to switch to next task
 
-function switchToNextTask() {
-  // Retrieve tasks from localStorage
-  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-  console.log(tasks);
-
-  // Remove the completed task (if any)
-  tasks.shift();
-  // console.log(tasks);
-
-  // Display the next task above the timer
-  const nextTask = tasks[0] || 'Pomodoro Wellness';
-  $('#taskDisplay').text(nextTask);
-
- // Save the updated list to localStorage
+// fxn to delete task
+function deleteTask(index){
+  let tasks = JSON.parse(localStorage.getItem('tasks'));
+  tasks.splice(index, 1);
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
+// fxn to switch to next task
+function switchToNextTask() {
+  // modal.hide();
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-
-
-$(document).ready(function() {
+  tasks.shift();
+  tasksLength = tasks.length;
+  $('.add-task p').text(`${tasksLength+1}.`);
+  $('#task-item-0').parent('span').fadeOut('slow');
+  updateQueueOrder('#localStorageData span > p', 0, 0);
+  
+  const nextTask = tasks[0] || 'Pomodoro Wellness';
+  $('#taskDisplay').text('Pomodoro Wellness');
   $pomTimerElement.text(pomTimerText);
 
-  console.log(  $pomTimerElement);
-  console.log(  $modalTimerElement)
+
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+// fxn to close modal
+function closeModal(){
+  console.log('wjnd')
+  modal.hide();
+}
+
+$(document).ready(function() {
+  $('#taskDisplay').text('Pomodoro Wellness');
+  $pomTimerElement.text(pomTimerText);
+  
+  displayTasks();
 
   closeButton.on('click', closeModal);
+
   // Start the timer when the start button is clicked
   $('#start').on('click', function() {
-    // console.log('clicked');
-    // startTimer(.1);
     $("#start").css("pointer-events", "none"); 
-    countDownTimer(pomTimer, displayModal, (timerCount) => updateTimerElement(timerCount, $pomTimerElement) )
+    countDownTimer(pomTimer, displayModal, (timerCount) => updateTimerElement(timerCount, $pomTimerElement))
   });
 
   // Stop the timer when the stop button is clicked
   $('#stop').on('click', function() {
     stopTimer();
+    // $("#timer-section > div > h2").removeClass('flashing-text');
   });
+
   $('#addTaskButton').on('click', addTask);
 
-});
 
-// $(document).ready(function() {
-//   function displayUserTasks() {
-//     // Retrieve the list of tasks from localStorage
-//     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-  
-//     // Display the most recent task above the timer and under the input box
-//     const mostRecentTask = tasks[0] || 'Pomodoro Wellness';
-//     $('#taskDisplay').text(mostRecentTask);
-  
-//     // Clear the localStorageData container
-//     $('#localStorageData').empty();
-  
-//     // Update the localStorageData container with all tasks
-//     tasks.forEach((task, index) => {
-//       const dataElement = $('<p>').text(`Task ${index + 1}: ${task}`);
-//       $('#localStorageData').append(dataElement);
-//     });
-//   }
-  
-//   // Call displayUserTasks on page load
-//   $(document).ready(function() {
-//     // ... (other code)
-  
-//     // Call displayUserTasks on page load
-//     displayUserTasks();
-//   });
-// });
+
+  // $('body').on('click', function(){
+  //   $("#timer-section > div > h2").removeClass('flashing-text');
+  // })
+});
