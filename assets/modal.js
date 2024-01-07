@@ -108,15 +108,13 @@ function addTask() {
   document.getElementById('taskDisplay').textContent = firstTask;
   
   // Clear the localStorageData container
-  const localStorageContainer = document.getElementById('localStorageData');
-  localStorageContainer.innerHTML = '';
-
+  const $localStorageContainer = $('#localStorageData');
+  console.log($localStorageContainer)
+  $localStorageContainer.text('');
   // Update the localStorageData container with all tasks
   tasks.forEach((task, index) => {
-    const dataElement = document.createElement('p');
-    dataElement.textContent = `Task ${index + 1}: ${task}`;
-    localStorageContainer.appendChild(dataElement);
-  });
+    $localStorageContainer.append(`<span class="flex flex-row items-center justify-between"><p>${index + 1}. ${task}</p><i class="del-task fa fa-times"></i></span>`);
+      });
 }
 
 // Fxn to switch to next task

@@ -1,6 +1,5 @@
 * {
     font-family: 'Roboto', sans-serif;
-    ;
     color: white;
 }
 
@@ -18,7 +17,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: fit-content;
     flex: 1;
     padding: 0 3%;
 }
@@ -38,19 +37,20 @@ header {
 }
 
 #task-section {
-    margin-bottom: 15px;
-    height: 300px;
+    /* margin-bottom: 15px; */
     width: fit-content;
     justify-content: end;
 }
 
+#task-section, .tasks-list {
+    height: 341px;
+
+}
+/* 
 #task-section input {
     color: rgb(10, 101, 10);
-}
+} */
 
-#task-section #localStorageData p {
-    color: rgb(16, 45, 2);
-}
 
 .tasks-list::-webkit-scrollbar {
     width: 10px;
@@ -64,7 +64,7 @@ header {
 }
 
 .tasks-list {
-    max-height: 250px;
+    max-height: 350px;
     /* width:fit-content; */
     justify-content: end;
     overflow: auto;
@@ -76,6 +76,69 @@ header {
 #taskInput {
     margin-right: 10px;
 }
+.add-task{
+    padding:10px
+}
+.tasks-list span{
+    padding:5px;
+}
+.add-task, .tasks-list span{
+    color:rgb(10, 101, 10);
+    background: rgba(10, 101, 10, 0.85);
+    border-radius:20px;
+    border: 2px solid rgba(58, 90, 47, 255);
+}
+/* 1st child no bottom */
+.add-task{
+    margin-top:4px;
+}
+.tasks-list span{
+    margin:2px 6px 2px 0px;
+
+}
+.del-task{
+    opacity:.05;
+    transition:1s;    transform: translateY(1px);
+
+}
+.del-task:hover{
+    opacity:1;
+    transition:0.3s;
+
+}
+.tasks-list span p{
+    margin:0px;
+    height:29px;
+    transform: translateY(4px);
+    color:#F8F8F8;
+
+}
+
+
+.add-task input[type='text'], .tasks-list span p{
+    border:0px solid;
+    border-radius:5px;
+    outline:none;
+    background:  none;
+    /* color:rgb(10, 101, 10); */
+
+    color:#F8F8F8;
+}
+.add-task input[type='text']:focus{
+    border:0px solid;
+    outline:none;
+}
+.add-task input[type='text']::placeholder{
+    color:rgba(248,248,248, 0.5);
+    font-style: italic;
+
+}
+
+.task-timer-wrapper{
+    height:fit-content;
+}
+
+
 
 #timer-section {
     /* position: inherit; */

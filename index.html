@@ -44,7 +44,7 @@
     </header>
 
 
-    <main class="ph6 pv4 flex flex-row">
+    <main class="">
         <!-- <section id="queue" class="queue-section">
             <div>
                 
@@ -53,21 +53,22 @@
                 
             </div>
         </section> -->
-        <section id="task-section" class="flex flex-column">
-            <div id="localStorageData" class="tasks-list flex flex-column-reverse"></div>
-            <span class="flex flex-row pv1 add-task">
-                <input type="text" id="taskInput" placeholder="task">
-                <button id="addTaskButton">+</button>
-            </span>
+        <div class="task-timer-wrapper ph6 pv4 flex flex-row items-end">
+            <section id="task-section" class="flex flex-column">
+                <div id="localStorageData" class="tasks-list flex flex-column-reverse"></div>
+                <span class="flex flex-row pv1 add-task">
+                    <input type="text" id="taskInput" placeholder="task">
+                    <button id="addTaskButton">+</button>
+                </span>
 
-        </section>
-        <section id="timer-section" class="text-center">
-            <h3 id="taskDisplay">Task Name</h3>
-            <h2>1:00</h2>
-            <button id="start" class="bubble">Start</button>
-            <button id="stop" class="bubble">Stop</button>
-        </section>
-
+            </section>
+            <section id="timer-section" class="text-center">
+                <h3 id="taskDisplay">Task Name</h3>
+                <h2>1:00</h2>
+                <button id="start" class="bubble">Start</button>
+                <button id="stop" class="bubble">Stop</button>
+            </section>
+        </div>
         <section id="modal" class="modal hide text-center">
             <div class="modal-content">
                 <button id="closeButton" class="close-button">x</button>
