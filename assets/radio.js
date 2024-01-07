@@ -84,6 +84,8 @@ function toggleAudio(){
             console.log('unpaused');
             audio.play();
             fillRadio();
+        } else if(!radioPlaying) {
+            audio.play();
         } else {
             pickRandom()
 
@@ -216,6 +218,44 @@ function playNewStation() {
 
 }
 
+//fxn to start audio 
+function startAudio(){
+    $.ajax({
+        url: 'https://de1.api.radio-browser.info/json/stations/bytag/' + genres[0],
+        method: 'GET',
+        success: function(data) {
+            stations = data;
+            
+            // stationNumber = 0;
+            // let station = data[stationNumber]
+            // if(random){
+                stationNumber = randomNumber(stations.length);
+            //     playStation();
+            // } else {
+            //     playStation();
+            // }
+
+
+            $('#previous').click(function(){
+                previousStation();
+            })
+            $('#next').click(function(){
+                nextStation();
+            })
+            let station = stations[stationNumber];
+
+            audio.src = station.url;
+            audio.load();
+            console.log('loaded!');
+
+        },
+        error: function(error) {
+            console.error('Error fetching stations:', error);
+            
+        }
+    });
+}
+
 // fxn to attempt to play audio
 function tryAudio(){
     audio.play().then(() =>{
@@ -277,7 +317,7 @@ function animateStationName(){
 
 
 $(document).ready(function() {
-
+    startAudio()
     init();
     animateStationName();
     $('#genre-select').change(function(){

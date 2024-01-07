@@ -288,6 +288,9 @@ background-color:#3c973c;
     border-radius: 5px;
     height: fit-content;
 }
+#radio-section * {
+color:black;
+}
 
 .radio-genre {
     appearance: none;
@@ -324,16 +327,37 @@ background-color:#3c973c;
     /* background:black; */
 }
 
+
+@keyframes flashText {
+    0%, 100% { color: white; }
+    50% { color: red; }
+}
+
+.flashing-text {
+    animation: flashText 2s infinite;
+}
+
 footer ul {
     list-style: none;
     padding: 0;
 }
 
 footer ul li a {
-    color: rgba(58, 90, 47, 255);
+    /* color: rgba(58, 90, 47, 255); */
+    font-size:.7rem;
     text-decoration: none;
     padding-right: 10px;
-    border-right: 1px solid black;
+}
+footer ul li a:hover,  footer ul li:hover svg path{
+    transition: 0.3s;
+    color: #5ab55a;
+    fill:#5ab55a;
+}
+footer ul li:not(:last-child) {
+    border-right: 1px solid #78d378;
+}
+footer ul li:not(:last-child) {
+    border-right: 1px solid #78d378;
 }
 
 /* footer ul li a:nth-of-type(2) {
@@ -344,8 +368,22 @@ footer ul li {
     display: inline;
     margin-right: 10px;
 }
+footer ul li svg{
+transform:translateY(4px);
+}
 
 footer img {
     width: 30px;
     height: 30px;
+}
+footer{
+    background-color: rgba(10, 101, 10, 0.8);
+}
+footer p{
+    font-size:0.7rem;
+    /* margin:0; */
+}
+
+footer ul{
+    margin-bottom:0;
 }

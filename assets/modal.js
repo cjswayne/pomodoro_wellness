@@ -21,7 +21,7 @@ let seconds = 0;
 let timer;
 
 const modalTimerText = '5:00';
-const pomTimerText = '25:00'
+const pomTimerText = '00:05'
 
 const modalTimer = convertTimeToMinutes(modalTimerText);
 let pomTimer = convertTimeToMinutes(pomTimerText);
@@ -37,6 +37,9 @@ function countDownTimer(minutes, fxnDone, fxnDuring){
   
   timer = setInterval(function(){
     if(countDown <= 0){
+      console.log('flashing1');
+      console.log($('#timer-section-wrapper h2'));
+      $("#timer-section > div > h2").addClass('flashing-text');
       clearInterval(timer);
       $("#start").css("pointer-events", "auto"); 
       fxnDone();
@@ -231,17 +234,30 @@ function switchToNextTask() {
  // Save the updated list to localStorage
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
-// fxn to delete task from queue
+$(document).ready(function() {
+  $('.dropdown-selected').click(function() {
+      $(this).parent().toggleClass('open');
+  });
+
+  $('.dropdown-option').click(function() {
+      var value = $(this).data('value');
+      $('.dropdown-selected').text($(this).text());
+      $(this).parent().removeClass('open');
+      console.log('Selected Value:', value);
+      // You can also do something with the selected value here
+  });
+});
 
 
 
 $(document).ready(function() {
+
+
   $pomTimerElement.text(pomTimerText);
   displayTasks();
   console.log(  $pomTimerElement);
   console.log(  $modalTimerElement)
   // take items from local storage and populate local storage container
-
   closeButton.on('click', closeModal);
   // Start the timer when the start button is clicked
   $('#start').on('click', function() {
@@ -254,6 +270,8 @@ $(document).ready(function() {
   // Stop the timer when the stop button is clicked
   $('#stop').on('click', function() {
     stopTimer();
+    $("#timer-section > div > h2").removeClass('flashing-text');
+
   });
   $('#addTaskButton').on('click', addTask);
 
