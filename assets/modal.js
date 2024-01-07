@@ -23,8 +23,8 @@ let timer;
 const modalTimerText = '5:00';
 const pomTimerText = '25:00'
 
-const modalTimer = 5;
-const pomTimer = 25;
+const modalTimer = convertTimeToMinutes(modalTimerText);
+let pomTimer = convertTimeToMinutes(pomTimerText);
 
 
 const $pomTimerElement = $('#timer-section h2');
@@ -57,9 +57,23 @@ function updateTimerElement(timerCount, timerElementText) {
   timerElementText.text(`${modalMinutes}:${((modalSeconds < 10) ? ('0' + modalSeconds ): modalSeconds)}`);
 }
 
+//fxn to stop the timer
+
 function stopTimer() {
+  pomTimer = convertTimeToMinutes($pomTimerElement.text());
+  
+  console.log(pomTimer);
   clearInterval(timer);
   $("#start").css("pointer-events", "auto"); 
+}
+
+//fxn to convert time to minutes
+function convertTimeToMinutes(timeStr){
+  const parts = timeStr.split(':');
+  const minutes = parseInt(parts[0], 10);
+  const seconds = parseInt(parts[1], 10);
+
+  return minutes + (seconds - 1) / 60;
 }
 
 
@@ -91,10 +105,13 @@ function displayTasks(){
   // console.log($localStorageContainer)
 
   let placeholderIndex = -1;
-
+  let tasksLength;
   $localStorageContainer.text('');
   const tasks = JSON.parse(localStorage.getItem('tasks'));
   if(tasks){
+    console.log(tasks.length);
+    tasksLength = tasks.length;
+    console.log(tasksLength);
     console.log('still happens')
     tasks.forEach((task, index) => {
       $localStorageContainer.append(`<span class="flex flex-row items-center justify-between">
@@ -110,12 +127,17 @@ function displayTasks(){
         $('button.del-task').on('click', function(event){
           let taskIndex = event.currentTarget.id
           taskIndex = taskIndex.replace('task-item-', '')
-          $('.add-task p').text(`${taskIndex}.`);
+          $('.add-task p').text(`${tasksLength}.`);
+          // $(this).siblings('p').text(tasksLength)
+
+
+          updateQueueOrder('#localStorageData span > p', taskIndex, tasksLength);
           $(this).parent('span').fadeOut('slow');
           
+          deleteTask(taskIndex);
 
           setTimeout(function() {
-            deleteTask(taskIndex);
+            displayTasks();
 
         }, 1000); 
 
@@ -131,6 +153,23 @@ function displayTasks(){
   $('#taskInput').attr('placeholder', 'Task');
 
 
+}
+
+// fxn to update queue order
+function updateQueueOrder(selector, listIndex, length){
+  $(selector).each(function(index){
+    var buttonId = $(this).siblings('button').attr('id');
+    // console.log(buttonId);
+    buttonId = buttonId.replace('task-item-', '')
+    var buttonIdNumber = parseInt(buttonId, 10);
+    console.log(buttonIdNumber);
+
+    // console.log($(this).id);
+    if(listIndex < buttonIdNumber){
+      $(this).text(`${buttonIdNumber++}.`);
+    }
+
+  })
 }
 
 
@@ -171,7 +210,6 @@ function deleteTask(index){
 
   localStorage.setItem('tasks', JSON.stringify(tasks));
   console.log('')
-  displayTasks();
 
 }
 

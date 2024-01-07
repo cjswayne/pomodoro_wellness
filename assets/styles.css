@@ -87,11 +87,13 @@ header {
 
 #taskInput {
     margin-right: 10px;
+    flex:1;
 }
 
 .add-task p{
 margin:0;
 font-style: italic;
+transform: translateY(1px);
 }
 .add-task, .tasks-list span{
     color:rgb(10, 101, 10);
@@ -137,9 +139,11 @@ position:relative;
 }
 .tasks-list span p{
     margin:0px;
-    height:29px;
-    transform: translateY(4px);
-    color:#F8F8F8;
+    height:fit-content;
+    width:250px;
+    text-overflow: wrap;
+    word-wrap:break-word;
+    flex:1;
 
 }
 
@@ -175,7 +179,7 @@ position:relative;
     padding: 40px 80px;
     background: rgba(10, 101, 10, 0.85);
     margin-left: 10px;
-    height:338px;
+    height: fit-content
 }
 
 #timer-section h3 {
