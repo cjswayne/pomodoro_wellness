@@ -83,9 +83,13 @@ function toggleAudio(){
         if(isGenreSelected){
             console.log('unpaused');
             audio.play();
+            $('#radio-toggle').text('stop');
+
             fillRadio();
         } else if(!radioPlaying) {
             audio.play();
+            $('#radio-toggle').text('stop');
+
         } else {
             pickRandom()
 
@@ -259,6 +263,8 @@ function startAudio(){
 // fxn to attempt to play audio
 function tryAudio(){
     audio.play().then(() =>{
+        $('#radio-toggle').text('stop');
+
         radioPlaying = true;
         fillRadio();
     }).catch(e => {
@@ -333,6 +339,12 @@ $(document).ready(function() {
         toggleElClass('dn', '#genre-select');
     });
     $('#radio-toggle').click(function(){
+        if($('#radio-toggle').text() == 'start'){
+            $('#radio-toggle').text('stop');
+        } else {
+            $('#radio-toggle').text('stop');
+
+        }
         toggleAudio();
     });
     $('#shuffle').click(function(){
